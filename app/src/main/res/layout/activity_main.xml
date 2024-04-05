@@ -1,0 +1,150 @@
+<!-- Activity_Main.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="4dp"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtUserProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:text="New User Profile" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtUserID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:layout_marginLeft="10dp"
+                android:text="User ID" />
+
+            <EditText
+                android:id="@+id/edituserid"
+                android:layout_width="177dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="text"
+                android:hint="User ID" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:layout_marginLeft="8dp"
+                android:text="User Name" />
+
+            <EditText
+                android:id="@+id/editusername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="text"
+                android:hint="UserName" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtUserPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:layout_marginLeft="8dp"
+                android:text="Password" />
+
+            <EditText
+                android:id="@+id/edituserpassword"
+                android:layout_width="196dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:hint="Password" />
+
+<!--            <ToggleButton-->
+<!--                android:id="@+id/toggleButton"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textOff="Show"-->
+<!--                android:textOn="Hide" />-->
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:padding="12dp"
+                android:textSize="15sp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/rectangular_button_bg"
+                android:text="Save"
+                android:layout_marginEnd="3dp"/>
+
+            <Button
+                android:id="@+id/btnSearch"
+                android:layout_width="96dp"
+                android:layout_height="match_parent"
+                android:textSize="15sp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/rectangular_button_bg"
+                android:text="Search"
+                android:layout_marginEnd="3dp"/>
+
+            <Button
+                android:id="@+id/btnEdit"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:textSize="15sp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/rectangular_button_bg"
+                android:text="Edit"
+                android:layout_marginEnd="3dp"/>
+
+            <Button
+                android:id="@+id/btnDelete"
+                android:layout_width="95dp"
+                android:layout_height="match_parent"
+                android:textSize="15sp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/rectangular_button_bg"
+                android:text="Delete"
+                android:layout_marginStart="2dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
