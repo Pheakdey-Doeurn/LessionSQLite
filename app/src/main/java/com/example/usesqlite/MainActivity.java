@@ -11,8 +11,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -20,8 +22,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     EditText editTextUserId, editTextUsername, editTextPassword;
-    Button btnSave, btnSearch, btnEdit, btnDelete;
+    Button btnSave, btnSearch, btnEdit, btnDelete, btnListUser;
     private MyDataHelper myDatabase;
+    private ListView userListView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +35,11 @@ public class MainActivity extends AppCompatActivity {
         editTextUserId = findViewById(R.id.edituserid);
         editTextUsername = findViewById(R.id.editusername);
         editTextPassword = findViewById(R.id.edituserpassword);
+        userListView = findViewById(R.id.userListView);
 
         myDatabase = new MyDataHelper(this);
+
+
 //  Save Data
         btnSave=findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -65,8 +72,18 @@ public class MainActivity extends AppCompatActivity {
                 deleteUserProfile();
             }
         });
+        // User List
+        btnListUser=findViewById(R.id.btnListUser);
+        btnListUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayUserList();
+            }
+        });
+
 
     }
+
 
     private void saveUserProfile() {
         SQLiteDatabase db = myDatabase.getWritableDatabase();
@@ -161,7 +178,26 @@ public class MainActivity extends AppCompatActivity {
         }
         db.close();
     }
+    private void displayUserList() {
+        // Retrieve user profiles from the database
+        List<UserProfile> userProfiles = myDatabase.getAllUserProfiles();
 
+        // Display user profiles using a suitable method (e.g., dialog, new activity, RecyclerView)
+        // For demonstration, let's display the user profiles in a Toast
+//        StringBuilder userListMessage = new StringBuilder("User List:\n");
+//        for (UserProfile userProfile : userProfiles) {
+//            userListMessage.append("ID: ").append(userProfile.getUserId())
+//                    .append(", Name: ").append(userProfile.getUserName())
+//                    .append(", Password: ").append(userProfile.getPassword())
+//                    .append("\n\n");
+//        }
+//        Toast.makeText(MainActivity.this, userListMessage.toString(), Toast.LENGTH_LONG).show();
+
+
+        UserListAdapter adapter = new UserListAdapter(MainActivity.this, userProfiles);
+        // Set the adapter to the ListView
+        userListView.setAdapter(adapter);
+    }
     @Override
     protected void onDestroy() {
         myDatabase.close();

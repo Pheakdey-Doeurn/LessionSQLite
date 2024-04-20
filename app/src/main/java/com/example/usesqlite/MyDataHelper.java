@@ -1,8 +1,12 @@
 package com.example.usesqlite;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 
@@ -39,5 +43,22 @@ public class MyDataHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_PROFILES);
         // Create table again
         onCreate(db);
+    }
+    public List<UserProfile> getAllUserProfiles() {
+        List<UserProfile> userProfiles = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_USER_PROFILES, null, null, null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") int userId = cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID));
+                @SuppressLint("Range") String userName = cursor.getString(cursor.getColumnIndex(COLUMN_USER_NAME));
+                @SuppressLint("Range") String password = cursor.getString(cursor.getColumnIndex(COLUMN_USER_PASSWORD));
+                UserProfile userProfile = new UserProfile(userId, userName, password);
+                userProfiles.add(userProfile);
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        db.close();
+        return userProfiles;
     }
 }
