@@ -1,18 +1,11 @@
 package com.example.usesqlite;
 
-import android.database.DataSetObserver;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListAdapter;
-
-import java.util.List;
-
 public class UserProfile {
-    private int userId;
+    private Integer userId;
     private String userName;
     private String password;
 
-    public UserProfile(int userId, String userName, String password) {
+    public UserProfile(Integer userId, String userName, String password) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
@@ -28,6 +21,19 @@ public class UserProfile {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getUserPassword() {
+        return password;
+    }
+
+    public void setUserId(int userId) {
+    }
+
+    public void setuserName(String userName) {
+    }
+
+    public void setUserPassword(String Password) {
     }
 }
 

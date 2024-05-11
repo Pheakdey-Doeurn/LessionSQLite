@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -32,59 +34,85 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Initialize UI elements
         editTextUserId = findViewById(R.id.edituserid);
         editTextUsername = findViewById(R.id.editusername);
         editTextPassword = findViewById(R.id.edituserpassword);
-        userListView = findViewById(R.id.userListView);
 
+        // Initialize database helper
         myDatabase = new MyDataHelper(this);
 
+        // Set up click listeners for buttons
 
-//  Save Data
-        btnSave=findViewById(R.id.btnSave);
+        // Save Data
+        btnSave = findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveUserProfile();
             }
         });
-//  Search Data
-        btnSearch=findViewById(R.id.btnSearch);
+
+        // Search Data
+        btnSearch = findViewById(R.id.btnSearch);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 searchUserProfile();
             }
         });
-//  Edit Data
-        btnEdit=findViewById(R.id.btnEdit);
+
+        // Edit Data
+        btnEdit = findViewById(R.id.btnEdit);
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editUserProfile();
             }
         });
-//  Delete Data
-        btnDelete=findViewById(R.id.btnDelete);
+
+        // Delete Data
+        btnDelete = findViewById(R.id.btnDelete);
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 deleteUserProfile();
             }
         });
+
         // User List
-        btnListUser=findViewById(R.id.btnListUser);
+        btnListUser = findViewById(R.id.btnListUser);
         btnListUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayUserList();
+                // Start MainTwo activity when this button is clicked
+                Intent i = new Intent(MainActivity.this, MainTwo.class);
+                startActivity(i);
             }
         });
 
+        Intent i = getIntent();
+        if (i != null) {
+            int userId = i.getIntExtra("userId", -1);
+            String userName = i.getStringExtra("userName");
+            String password = i.getStringExtra("password");
 
+            // Check if userId is valid (-1 indicates no value was passed)
+            if (userId != -1 && userName != null && password != null) {
+                // Display the userId, userName, and password
+                TextView userIdTextView = findViewById(R.id.edituserid);
+                editTextUserId.setText(String.valueOf(userId));
+
+                TextView userNameTextView = findViewById(R.id.editusername);
+                editTextUsername.setText(userName);
+
+                TextView passwordTextView = findViewById(R.id.edituserpassword);
+                editTextPassword.setText(password);
+            }
+        }
     }
 
-
+    // Method to save user profile data to the database
     private void saveUserProfile() {
         SQLiteDatabase db = myDatabase.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -101,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
         }
         db.close();
     }
+
+    // Method to search for a user profile by ID in the database
     private void searchUserProfile() {
         SQLiteDatabase db = myDatabase.getReadableDatabase();
 
@@ -137,6 +167,8 @@ public class MainActivity extends AppCompatActivity {
         cursor.close();
         db.close();
     }
+
+    // Method to edit an existing user profile in the database
     private void editUserProfile() {
         SQLiteDatabase db = myDatabase.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -160,6 +192,8 @@ public class MainActivity extends AppCompatActivity {
         }
         db.close();
     }
+
+    // Method to delete a user profile from the database
     private void deleteUserProfile() {
         SQLiteDatabase db = myDatabase.getWritableDatabase();
 
@@ -178,26 +212,8 @@ public class MainActivity extends AppCompatActivity {
         }
         db.close();
     }
-    private void displayUserList() {
-        // Retrieve user profiles from the database
-        List<UserProfile> userProfiles = myDatabase.getAllUserProfiles();
 
-        // Display user profiles using a suitable method (e.g., dialog, new activity, RecyclerView)
-        // For demonstration, let's display the user profiles in a Toast
-//        StringBuilder userListMessage = new StringBuilder("User List:\n");
-//        for (UserProfile userProfile : userProfiles) {
-//            userListMessage.append("ID: ").append(userProfile.getUserId())
-//                    .append(", Name: ").append(userProfile.getUserName())
-//                    .append(", Password: ").append(userProfile.getPassword())
-//                    .append("\n\n");
-//        }
-//        Toast.makeText(MainActivity.this, userListMessage.toString(), Toast.LENGTH_LONG).show();
-
-
-        UserListAdapter adapter = new UserListAdapter(MainActivity.this, userProfiles);
-        // Set the adapter to the ListView
-        userListView.setAdapter(adapter);
-    }
+    // Method to close the database connection when the activity is destroyed
     @Override
     protected void onDestroy() {
         myDatabase.close();
